@@ -3,10 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <GridView
+        android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="主页面"/>
+        android:layout_marginLeft="50dip"
+        android:layout_marginRight="50dip"
+        android:layout_marginTop="60dp"
+        android:horizontalSpacing="50dip"
+        android:numColumns="2"
+        android:verticalSpacing="30dip">
+
+    </GridView>
 
 
 </RelativeLayout>
