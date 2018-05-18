@@ -9,7 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.android.exercise.xct.video;
+
+import com.android.exercise.xct.video.VideoListActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -32,7 +33,8 @@ public class MainActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 0:
-                        Intent intent=new Intent(MainActivity.this,videoListActivity.class);
+                        Intent intent=new Intent(MainActivity.this, VideoListActivity.class);
+                        startActivity(intent);
                         Toast.makeText(MainActivity.this,"点击了第一个",Toast.LENGTH_SHORT).show();
                         break;
                     default:
@@ -63,7 +65,7 @@ public class MainActivity extends BaseActivity {
           }else{
               v=View.inflate(MainActivity.this,R.layout.main_item,null);
               holder=new ViewHolder();
-              holder.iv_icon=v.findViewById(R.id.iv_itme);
+              holder.iv_icon=(ImageView) v.findViewById(R.id.iv_itme);
               v.setTag(holder);
           }
             /**

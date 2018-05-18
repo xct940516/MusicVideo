@@ -3,7 +3,6 @@ package com.android.exercise.xct;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,10 +28,13 @@ public abstract class BaseActivity extends Activity {
         btn_left.setOnClickListener(buttonOnClickLister);
         btn_right.setOnClickListener(buttonOnClickLister);
 
-        ll_Content=findViewById(R.id.ll_child_content);
+
+        ll_Content=(LinearLayout) findViewById(R.id.ll_child_content);
         View view=setContentView();
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        ll_Content.addView(view,layoutParams);
+        if(view!=null){
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            ll_Content.addView(view,layoutParams);
+        }
 
     }
 
