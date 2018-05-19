@@ -3,7 +3,8 @@
     package="com.android.exercise.xct">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +20,9 @@
         <activity android:name=".BaseActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".video.VideoListActivity" />
-        <activity android:name=".video.ConnectDetailActivity"></activity>
+        <activity android:name=".video.ConnectDetailActivity" />
+        <activity android:name=".video.VideoPlayActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
