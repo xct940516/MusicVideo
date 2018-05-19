@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dip">
+
+    <ImageView
+        android:id="@+id/iv_videoimage"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:src="@mipmap/video_default_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dip"
+        android:layout_marginLeft="5dip"/>
+
+    <TextView
+        android:id="@+id/iv_videoname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dip"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/iv_videoimage"
+        android:text="视屏的名字"
+        android:textSize="20sp"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:id="@+id/iv_videoduration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@+id/iv_videoimage"
+        android:layout_below="@+id/iv_videoname"
+        android:layout_marginTop="2dip"
+        android:text="视屏的时长"
+        android:textSize="15sp"
+        android:textColor="#ffffff"/>
+
+
+    <TextView
+        android:id="@+id/iv_videosize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dip"
+        android:text="视屏的大小"
+        android:textSize="20sp"
+        android:textColor="#ffffff"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="#66ffffff"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.android.exercise.xct.video;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -11,9 +12,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.exercise.xct.BaseActivity;
 import com.android.exercise.xct.R;
@@ -56,6 +59,18 @@ public class VideoListActivity extends BaseActivity {
         tv_video=(TextView) findViewById(R.id.tv_video);
         util=new Util();
         getAllVideo();
+
+        lv_video.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VideoItemBean videoItemBean=videoItemBeans.get(position);
+              //  Toast.makeText(VideoListActivity.this,videoItemBean.getTitle(),Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(VideoListActivity.this,VideoPlayActivity.class);
+                intent.setData(Uri.parse(videoItemBean.getData()));
+                startActivity(intent);
+
+            }
+        });
 
     }
 

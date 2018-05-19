@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ public abstract class BaseActivity extends Activity {
     private Button btn_right;
     private TextView tv_title;
     private LinearLayout ll_Content;
+    private FrameLayout fl_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public abstract class BaseActivity extends Activity {
         tv_title=(TextView)findViewById(R.id.tv_titile);
         btn_left.setOnClickListener(buttonOnClickLister);
         btn_right.setOnClickListener(buttonOnClickLister);
-
+        fl_title=(FrameLayout) findViewById(R.id.fl_title);
 
         ll_Content=(LinearLayout) findViewById(R.id.ll_child_content);
         View view=setContentView();
@@ -43,6 +45,14 @@ public abstract class BaseActivity extends Activity {
      * @return
      */
     public abstract View setContentView();
+
+
+    /**
+     * 设置标题栏是否可见
+     */
+    public void setTitleBarvisibility(int visibility){
+        fl_title.setVisibility(visibility);
+    }
 
     /**
      * 设置坐边按钮按钮可见
