@@ -22,7 +22,8 @@
         <activity android:name=".video.VideoListActivity" />
         <activity android:name=".video.ConnectDetailActivity" />
         <activity android:name=".video.VideoPlayActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
     </application>
 
 </manifest>

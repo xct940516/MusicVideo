@@ -111,7 +111,6 @@ public class VideoListActivity extends BaseActivity {
 
             holder.iv_videosize.setText(android.text.format.Formatter.formatFileSize(VideoListActivity.this,videoItemBean.getSize()));
 
-
             return v;
         }
 
@@ -143,6 +142,7 @@ public class VideoListActivity extends BaseActivity {
                 videoItemBeans=new ArrayList<VideoItemBean>();
                 ContentResolver resolver=getContentResolver();
                 Uri uri= MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+             //   Uri uri= MediaStore.Video.Media.INTERNAL_CONTENT_URI;
                 String[] projection={
                         MediaStore.Video.Media.TITLE,  //视屏标题
                         MediaStore.Video.Media.DURATION,//时长
@@ -184,6 +184,8 @@ public class VideoListActivity extends BaseActivity {
     public void leftButtonClick() {
         finish();
     }
+
+
 
     @Override
     public void rightButtonClick() {

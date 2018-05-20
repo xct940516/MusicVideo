@@ -1,5 +1,7 @@
 package com.android.exercise.xct.Util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -33,8 +35,11 @@ public class Util {
         }else{
                 return mFormatter.format("%02d:%02d",minutes,seconds).toString();
             }
-
-
+    }
+    //得到系统时间
+    public  String getSystemTime(){
+        SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
+        return format.format(new Date());
     }
 
 
