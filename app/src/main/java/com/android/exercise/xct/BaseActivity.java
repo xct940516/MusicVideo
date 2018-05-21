@@ -55,7 +55,7 @@ public abstract class BaseActivity extends Activity {
     }
 
     /**
-     * 设置坐边按钮按钮可见
+     * 设置左边按钮按钮可见
      * @param visibility
      */
     public void setLeftvisibility(int visibility){

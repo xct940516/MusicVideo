@@ -12,6 +12,7 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/ll_control_play"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

@@ -1,10 +1,12 @@
 package com.android.exercise.xct.domain;
 
+import java.io.Serializable;
+
 /**
  * Created by xct on 2018/5/17.
  */
-
-public class VideoItemBean {
+// 传递对象要序列化
+public class VideoItemBean implements Serializable{
 
     //标题
     private String  title;

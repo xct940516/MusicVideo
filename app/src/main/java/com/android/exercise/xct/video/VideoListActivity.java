@@ -65,10 +65,20 @@ public class VideoListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 VideoItemBean videoItemBean=videoItemBeans.get(position);
               //  Toast.makeText(VideoListActivity.this,videoItemBean.getTitle(),Toast.LENGTH_LONG).show();
+                //设置单个的数据传递
+//                Intent intent=new Intent(VideoListActivity.this,VideoPlayActivity.class);
+//                intent.setData(Uri.parse(videoItemBean.getData()));
+//                startActivity(intent);
+                //将整个视频列表传过去
                 Intent intent=new Intent(VideoListActivity.this,VideoPlayActivity.class);
-                intent.setData(Uri.parse(videoItemBean.getData()));
+                Bundle bundle=new Bundle();
+                //将视屏列表放入对象放入bundle中（对象需要序列化(java或者android自带的)）
+                bundle.putSerializable("videoItemBeans",videoItemBeans);
+                //传入视屏列表list
+                intent.putExtras(bundle);
+                //传入点击位置
+                intent.putExtra("position",position);
                 startActivity(intent);
-
             }
         });
 
