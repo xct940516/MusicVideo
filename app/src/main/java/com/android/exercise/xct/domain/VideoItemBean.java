@@ -5,15 +5,15 @@ import java.io.Serializable;
 /**
  * Created by xct on 2018/5/17.
  */
-// 传递对象要序列化
-public class VideoItemBean implements Serializable{
+// 使用bundle传递对象要序列化
+public class VideoItemBean implements Serializable {
 
     //标题
-    private String  title;
+    private String title;
     //时长
     private String duration;
     //大小
-    private  long size;
+    private long size;
     //绝对路径
     private String data;
 

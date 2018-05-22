@@ -55,6 +55,8 @@ public class VideoPlayActivity extends BaseActivity {
     private LinearLayout ll_contral_play;
     //播放消息
     protected static final int PROGRESS = 1;
+    //消息延迟隐藏控制栏
+    protected static  final int HIDECONTROLPLAYER = 2;
 
     /**
      * 视屏是否播放的标志
@@ -69,6 +71,8 @@ public class VideoPlayActivity extends BaseActivity {
     private Boolean isDestroy = false;
     private ArrayList<VideoItemBean> videoItemBeans;
     private int position;
+
+    //ToDo 关于全局变量
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -92,6 +96,9 @@ public class VideoPlayActivity extends BaseActivity {
                         handler.sendEmptyMessageDelayed(PROGRESS, 1000);
                     }
 
+                    break;
+                case  HIDECONTROLPLAYER:
+                    hideContralPlayer();
                     break;
                 default:
                     break;
@@ -132,12 +139,16 @@ public class VideoPlayActivity extends BaseActivity {
 
     }
 
+    /**
+     * 得到数据
+     */
+
     private void getData() {
         //得到视屏列表对象（多个）
-        videoItemBeans = (ArrayList<VideoItemBean>) getIntent().getSerializableExtra("videoItemBeans");
+        videoItemBeans = (ArrayList<VideoItemBean>) getIntent().getSerializableExtra("videoItemBeans");//java自带序列化
+        //getIntent().getParcelableExtra();     android 自带序列化(原理还是将数据拆分成一个一个intent，效率高，但不适合本地传递数据)
         //得到点击视屏位置
         position = getIntent().getIntExtra("position", 0);
-
 
         //得到带个数据
         uri = getIntent().getData();
@@ -175,9 +186,11 @@ public class VideoPlayActivity extends BaseActivity {
             public boolean onSingleTapConfirmed(MotionEvent e) {
                 Toast.makeText(getApplicationContext(),"单击",0).show();
                 if(isShwoContral){
+                    removeHideControlMessage();
                     hideContralPlayer();
                 }else {
                     showContralPlayer();
+                    sendHideControlMessage();
                 }
                 return super.onSingleTapConfirmed(e);
             }
@@ -185,9 +198,24 @@ public class VideoPlayActivity extends BaseActivity {
 
     }
 
+    /**
+     * 发送延迟消息隐藏控制栏
+     */
+    protected void sendHideControlMessage(){
+        handler.sendEmptyMessageDelayed(HIDECONTROLPLAYER,5000);
+    }
+
+    /**
+     * 发送消息移除隐藏的消息
+     */
+
+    protected  void removeHideControlMessage(){
+        handler.removeMessages(HIDECONTROLPLAYER);
+    }
+
+
 
     //使用手势识别,消耗它
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -215,22 +243,25 @@ public class VideoPlayActivity extends BaseActivity {
                 }
             }
 
+
+            //ToDo   要去了解消息发送和移除的根本
             //手指开始拖动回调此方法
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                removeHideControlMessage();//(5s后发的消息在消息队列中，移除它)
             }
 
             //手指离开时回调此方法
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                sendHideControlMessage();
             }
         });
         //mediaplayer生命周期  准备 的监听
         vv_video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+
                 vv_video.start();
                 isplaying = true;
                 //得到视屏总时间，然后设置到控件中
@@ -278,22 +309,17 @@ public class VideoPlayActivity extends BaseActivity {
 
                 setPlayStatus();
 
-
             } else {
                 position=videoItemBeans.size()-1;
                 //越界，最后一个视屏播完走着。
                 Toast.makeText(getApplicationContext(), "最后一个视屏播完了", 1).show();
                 finish();
-
             }
-
         }
     }
 
-
-
     /**
-     * 播放下一个视屏
+     * 播放上一个视屏
      */
     private void playPreVideo() {
         if (videoItemBeans != null && videoItemBeans.size() > 0) {
@@ -305,7 +331,7 @@ public class VideoPlayActivity extends BaseActivity {
                 tv_play_titile.setText(videoItemBean.getTitle());
                 setPlayStatus();
             } else {
-                //越界，最后一个视屏播完走着。
+                //越界，这是一个视屏播完走着。
                 position=0;
                 Toast.makeText(getApplicationContext(), "这就是第一个视屏了", 1).show();
                 finish();
@@ -375,6 +401,8 @@ public class VideoPlayActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
+             String Action = intent.getAction();
+            Log.d(TAG,"收到的广播是："+Action);
             level = intent.getIntExtra("level", 0);
 
             //  handler.sendEmptyMessage(PROGRESS);  应该发另外一个消息去处理电量。后期优化吧
@@ -448,13 +476,13 @@ public class VideoPlayActivity extends BaseActivity {
      * 控制栏是否显示
      */
     private Boolean isShwoContral=false;
-//隐藏控制栏
+        //隐藏控制栏
     private void hideContralPlayer(){
         ll_contral_play.setVisibility(View.GONE);
         isShwoContral=false;
     }
 
-//显示控制栏
+        //显示控制栏
     private void showContralPlayer(){
         ll_contral_play.setVisibility(View.VISIBLE);
         isShwoContral=true;

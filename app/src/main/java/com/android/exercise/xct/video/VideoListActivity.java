@@ -72,8 +72,9 @@ public class VideoListActivity extends BaseActivity {
                 //将整个视频列表传过去
                 Intent intent=new Intent(VideoListActivity.this,VideoPlayActivity.class);
                 Bundle bundle=new Bundle();
-                //将视屏列表放入对象放入bundle中（对象需要序列化(java或者android自带的)）
-                bundle.putSerializable("videoItemBeans",videoItemBeans);
+                //将视屏列表放入对象放入bundle中（对象需要序列化(java或者android自带的))
+                //bundle.putParcelable();  android 自带的序列化
+                bundle.putSerializable("videoItemBeans",videoItemBeans);//java 自带的序列化
                 //传入视屏列表list
                 intent.putExtras(bundle);
                 //传入点击位置
@@ -99,6 +100,9 @@ public class VideoListActivity extends BaseActivity {
 //            tv.setText(videoItemBeans.get(i).toString());
 //            tv.setTextColor(Color.WHITE);
 //            tv.setTextSize(18);
+            //ToDo  关于viewHold
+
+
               View v;
               ViewHolder holder;
           if(view!=null){
@@ -117,6 +121,7 @@ public class VideoListActivity extends BaseActivity {
             holder.iv_videoname.setText(videoItemBean.getTitle());
             //将时长，和视屏大小转换
             Log.d(TAG,"第"+i+"个视屏时长："+videoItemBean.getDuration());
+            //将string转换为int   再格式化
             holder.iv_videoduration.setText( util.stringForTime(Integer.valueOf(videoItemBean.getDuration())));
 
             holder.iv_videosize.setText(android.text.format.Formatter.formatFileSize(VideoListActivity.this,videoItemBean.getSize()));

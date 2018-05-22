@@ -14,6 +14,8 @@ public class Util {
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
 
+    //Todo  关于工具类的总结使用
+
     public Util(){
         //装换成字符串时间
         mFormatBuilder=new StringBuilder();
