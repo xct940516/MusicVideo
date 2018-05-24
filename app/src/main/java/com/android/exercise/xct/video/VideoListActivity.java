@@ -2,6 +2,7 @@ package com.android.exercise.xct.video;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.exercise.xct.BaseActivity;
 import com.android.exercise.xct.R;
+import com.android.exercise.xct.Util.PermissionUtils;
 import com.android.exercise.xct.Util.Util;
 import com.android.exercise.xct.domain.VideoItemBean;
 
@@ -154,40 +157,67 @@ public class VideoListActivity extends BaseActivity {
         new Thread(){
             @Override
             public void run() {
-                videoItemBeans=new ArrayList<VideoItemBean>();
-                ContentResolver resolver=getContentResolver();
-                Uri uri= MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-             //   Uri uri= MediaStore.Video.Media.INTERNAL_CONTENT_URI;
-                String[] projection={
-                        MediaStore.Video.Media.TITLE,  //视屏标题
-                        MediaStore.Video.Media.DURATION,//时长
-                        MediaStore.Video.Media.SIZE,//大小
-                        MediaStore.Video.Media.DATA//觉对路径
-                };
-
-                Cursor cursor = resolver.query(uri,projection,null,null,null);
-
-                while (cursor.moveToNext()){
-                    //过滤大于3M的视屏
-                    long size = cursor.getLong(2);
-                    if(size>3*1024*1024){
-                        VideoItemBean videoItemBean=new VideoItemBean();
-                        String  title= cursor.getString(0);
-                        videoItemBean.setTitle(title);
-                        String duration =cursor.getString(1);
-                        videoItemBean.setDuration(duration);
-                        videoItemBean.setSize(size);
-                        String data=cursor.getString(3);
-                        videoItemBean.setData(data);
-                        videoItemBeans.add(videoItemBean);
-                    }
+                if(PermissionUtils.isGrantExternalRW(VideoListActivity.this,1)){
+                    getAllVideoDate();
                 }
-                handler.sendEmptyMessage(0);
-            }
+                }
+
         }.start();
     }
 
+    private void getAllVideoDate() {
+        videoItemBeans=new ArrayList<VideoItemBean>();
+        ContentResolver resolver=getContentResolver();
+        Uri uri= MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+        //Uri uri= MediaStore.Video.Media.INTERNAL_CONTENT_URI;
+        String[] projection={
+                MediaStore.Video.Media.TITLE,  //视屏标题
+                MediaStore.Video.Media.DURATION,//时长
+                MediaStore.Video.Media.SIZE,//大小
+                MediaStore.Video.Media.DATA//觉对路径
+        };
 
+        Cursor cursor = resolver.query(uri,projection,null,null,null);
+
+        while (cursor.moveToNext()){
+            //过滤大于3M的视屏
+            long size = cursor.getLong(2);
+            if(size>3*1024*1024){
+                VideoItemBean videoItemBean=new VideoItemBean();
+                String  title= cursor.getString(0);
+                videoItemBean.setTitle(title);
+                String duration =cursor.getString(1);
+                videoItemBean.setDuration(duration);
+                videoItemBean.setSize(size);
+                String data=cursor.getString(3);
+                videoItemBean.setData(data);
+                videoItemBeans.add(videoItemBean);
+            }
+        }
+        handler.sendEmptyMessage(0);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //Login(loginId, loginPsd);
+                    getAllVideoDate();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),"您的手机暂不适配哦~",0).show();
+                        }
+                    });
+                }
+                break;
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     @Override
     public View setContentView() {

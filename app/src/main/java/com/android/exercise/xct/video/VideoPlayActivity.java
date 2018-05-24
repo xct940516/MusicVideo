@@ -345,10 +345,15 @@ public class VideoPlayActivity extends BaseActivity {
      * 设置视屏播放状态
      */
     private void setPlayStatus() {
+//        Log.d(TAG,Log.getStackTraceString(new Throwable()));
+        Exception exception=new Exception("call back");
+        exception.printStackTrace();
+
         if (position == 0) {
             //第一个视屏 上一个按钮不能点，这个条件似乎怎么也不会走
             btn_play_pre.setBackgroundResource(R.mipmap.btn_pre_gray);
             btn_play_pre.setEnabled(false);
+            
 
         } else if (position == videoItemBeans.size() - 1) {
             //最后一个是视屏，下一个按钮不能点
