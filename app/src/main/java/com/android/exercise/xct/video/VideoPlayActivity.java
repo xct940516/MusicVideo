@@ -1,10 +1,13 @@
 package com.android.exercise.xct.video;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothA2dp;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
@@ -29,6 +32,7 @@ import com.android.exercise.xct.Util.Util;
 import com.android.exercise.xct.domain.VideoItemBean;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class VideoPlayActivity extends BaseActivity {
 
@@ -71,6 +75,7 @@ public class VideoPlayActivity extends BaseActivity {
     private Boolean isDestroy = false;
     private ArrayList<VideoItemBean> videoItemBeans;
     private int position;
+    private AudioManager am;
 
     //ToDo 关于全局变量
 
@@ -105,9 +110,7 @@ public class VideoPlayActivity extends BaseActivity {
             }
         }
 
-
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +161,8 @@ public class VideoPlayActivity extends BaseActivity {
     private void initDate() {
         utils = new Util();
         isDestroy = false;
+
+        am=(AudioManager) getSystemService(AUDIO_SERVICE);
 
         //注册电量变化广播
         IntentFilter filter = new IntentFilter();
